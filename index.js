@@ -14,10 +14,10 @@ import { auth } from "./controllers/authenticate-service.js";
 const app = express();
 
 const acceptedOrigin = {
-  origin: 'http://localhost:5173',
-  optionsSuccessStatus: 200
-}
-app.use(cors(acceptedOrigin))
+  origin: "http://localhost:5173",
+  optionsSuccessStatus: 200,
+};
+app.use(cors(acceptedOrigin));
 
 app.use(express.json());
 
@@ -25,23 +25,27 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //routes
+app.get("/", (req, res, next) => {
+  res.send("Everlasting API V.1.0.0");
+});
+
 app.use("/user", UserRoutes);
 app.use("/activity", ActivityRoutes);
 
 // routes connot found
-app.use("/" , (req,res)=>{
+app.use("/", (req, res) => {
   return res.json({
     status: 404,
-    message: "something went wrong"
-  })
-})
+    message: "something went wrong",
+  });
+});
 
 const start = async () => {
   try {
     await mongoose.connect(MONGODB_URI, {
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
-    console.log('mongoDB has been connected')
+    console.log("mongoDB has been connected");
     app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
   } catch (err) {
     console.error(err);
