@@ -25,9 +25,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //routes
-app.get("/", (req, res, next) => {
-  res.send("Everlasting API V.1.0.0");
-});
 
 app.use("/user", UserRoutes);
 app.use("/activity", ActivityRoutes);
@@ -35,8 +32,8 @@ app.use("/activity", ActivityRoutes);
 // routes connot found
 app.use("/", (req, res) => {
   return res.json({
-    status: 404,
-    message: "something went wrong",
+    status: 200,
+    message: "Everlasting API V.1.0.0",
   });
 });
 
